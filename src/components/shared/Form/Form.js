@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputType from "./InputType";
 import { Link } from "react-router-dom";
 import { handleLogin, handleRegister } from "../../../services/authService";
-
+import { Card,Form as Fm } from "antd";
 const Form = ({ formType, submitBtn, formTitle }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,8 +14,9 @@ const Form = ({ formType, submitBtn, formTitle }) => {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   return (
-    <div>
+    <Card>
       <form
+      className="flex flex-col gap-4"
         onSubmit={(e) => {
           if (formType === "login")
             return handleLogin(e, email, password, role);
@@ -36,7 +37,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
       >
         <h1 className="text-center">{formTitle}</h1>
         <hr />
-        <div className="d-flex mb-3">
+        <div className="flex flex-row">
           <div className="form-check">
             <input
               type="radio"
@@ -47,7 +48,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               onChange={(e) => setRole(e.target.value)}
               defaultChecked
             />
-            <label htmlFor="adminRadio" className="form-check-label">
+            <label htmlFor="adminRadio" className="ml-2">
               Donar
             </label>
           </div>
@@ -60,7 +61,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               value={"admin"}
               onChange={(e) => setRole(e.target.value)}
             />
-            <label htmlFor="adminRadio" className="form-check-label">
+            <label htmlFor="adminRadio" className="ml-2">
               Admin
             </label>
           </div>
@@ -73,7 +74,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               value={"hospital"}
               onChange={(e) => setRole(e.target.value)}
             />
-            <label htmlFor="hospitalRadio" className="form-check-label">
+            <label htmlFor="hospitalRadio" className="ml-2">
               Hospital
             </label>
           </div>
@@ -86,7 +87,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               value={"organisation"}
               onChange={(e) => setRole(e.target.value)}
             />
-            <label htmlFor="organisationRadio" className="form-check-label">
+            <label htmlFor="organisationRadio" className="ml-2">
               Organisation
             </label>
           </div>
@@ -201,20 +202,20 @@ const Form = ({ formType, submitBtn, formTitle }) => {
           {formType === "login" ? (
             <p>
               Not registerd yet ? Register
-              <Link to="/register"> Here !</Link>
+              <Link to="/register" className="font-semibold border-2 p-1 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg ml-2"> Here !</Link>
             </p>
           ) : (
             <p>
-              ALready Usser Please
-              <Link to="/login"> Login !</Link>
+              Already A User, Please
+              <Link className="font-semibold border-2 p-1 px-2 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg ml-2" to="/login"> Login !</Link>
             </p>
           )}
-          <button className="btn btn-primary" type="submit">
+          <button className="font-semibold border-2 p-1 mt-2 px-2 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg " type="submit">
             {submitBtn}
           </button>
         </div>
       </form>
-    </div>
+    </Card>
   );
 };
 

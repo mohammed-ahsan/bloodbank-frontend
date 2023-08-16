@@ -2,14 +2,58 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import InputType from "./../Form/InputType";
 import API from "./../../../services/API";
+import { Button,Modal as AntMod,Dropdown,Radio,Input } from 'antd';
+import { useEffect } from "react";
 
-const Modal = () => {
+const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [inventoryType, setInventoryType] = useState("in");
-  const [bloodGroup, setBloodGroup] = useState("");
+ 
   const [quantity, setQuantity] = useState(0);
   const [email, setEmail] = useState("");
   const { user } = useSelector((state) => state.auth);
-  // handle modal data
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const items = [{
+    key: '1',
+    label: "O+",
+  },
+  {
+    key: '2',
+    label:"O-",
+  },
+  {
+    key: '3',
+    label:'A+',
+  }
+,
+{
+  key: '4',
+  label:'A-',
+
+
+},
+{
+  key: '5',
+  label:'B+',
+
+},
+{
+  key: '6',
+  label:'B-',
+
+},
+{
+  key: '7',
+  label:'AB+',
+
+},
+{
+  key: '8',
+  label:'AB-',
+},
+
+
+]
+const [bloodGroup, setBloodGroup] = useState(items[0].label);
   const handleModalSubmit = async () => {
     try {
       if (!bloodGroup || !quantity) {
@@ -32,112 +76,94 @@ const Modal = () => {
       window.location.reload();
     }
   };
+  useEffect(() => {
+    setIsModalOpen(isModal);
+  }, [isModal]);
+  // handle modal data
+  
 
   return (
     <>
       {/* Modal */}
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabIndex={-1}
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
+      <AntMod open={isModalOpen} 
+      okText={<p className=" text-black">Submit</p>}
+      okButtonProps={{className:"border-1 border-gray-300 rounded-lg",type:"default"}}
+      onOk={
+        ()=>{
+          handleModalSubmit()
+          handleOk()
+        }
+        } onCancel={handleCancel}
+       title="Create New Record"
+
       >
         <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="staticBackdropLabel">
-                Manage Blood Record
-              </h1>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              />
-            </div>
-            <div className="modal-body">
-              <div className="d-flex mb-3">
-                Blood Type: &nbsp;
-                <div className="form-check ms-3">
-                  <input
-                    type="radio"
-                    name="inRadio"
-                    defaultChecked
-                    value={"in"}
-                    onChange={(e) => setInventoryType(e.target.value)}
-                    className="form-check-input"
-                  />
-                  <label htmlFor="in" className="form-check-label">
-                    IN
-                  </label>
+          <div className="flex flex-col gap-2">
+            
+            
+              <div className="flex flex-row justify-between">
+               
+                <div className="flex flex-col gap-2">
+                Record Type: &nbsp;
+                  <Radio.Group
+
+                    
+                    onChange={(e) => 
+                      {setInventoryType(e.target.value)
+                      
+                      }}
+                    value={inventoryType}
+                  
+
+                  >
+                    <Radio value={"in"}>In</Radio>
+                    <Radio value={"out"}>Out</Radio>
+                  </Radio.Group>
+                
+                  
+                  
                 </div>
-                <div className="form-check ms-3">
-                  <input
-                    type="radio"
-                    name="inRadio"
-                    value={"out"}
-                    onChange={(e) => setInventoryType(e.target.value)}
-                    className="form-check-input"
-                  />
-                  <label htmlFor="out" className="form-check-label">
-                    OUT
-                  </label>
-                </div>
-              </div>
-              <select
-                className="form-select"
-                aria-label="Default select example"
-                onChange={(e) => setBloodGroup(e.target.value)}
+                <div>
+                Blood Group: &nbsp;
+                <Dropdown
+                
+               
+                menu={{items,
+                  selectable: true,
+                  defaultSelectedKeys: ['1'],
+                  onSelect: ({ item, key, keyPath, selectedKeys, domEvent  }) => {
+                    
+                    setBloodGroup(items[key-1].label)
+                    console.log(items[key-1].label)
+                  },
+
+                }}
+                
+                //onChange={(e) => setBloodGroup(e.target.value)}
               >
-                <option defaultValue={"Open this select menu"}>
-                  Open this select menu
-                </option>
-                <option value={"O+"}>O+</option>
-                <option value={"O-"}>O-</option>
-                <option value={"AB+"}>AB+</option>
-                <option value={"AB-"}>AB-</option>
-                <option value={"A+"}>A+</option>
-                <option value={"A-"}>A-</option>
-                <option value={"B+"}>B+</option>
-                <option value={"B-"}>B-</option>
-              </select>
-              <InputType
-                labelText={"Donar Email"}
-                labelFor={"donarEmail"}
+               <Button>{bloodGroup}</Button>
+              </Dropdown></div>
+              </div>
+              
+              Donor Email
+              <Input
+                placeholder="********@email.com"
                 inputType={"email"}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              />
-              <InputType
-                labelText={"Quanitity (ML)"}
-                labelFor={"quantity"}
+              />Quanitity (ML)
+              <Input
+                
+                placeholder="quantity"
                 inputType={"Number"}
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleModalSubmit}
-              >
-                Submit
-              </button>
-            </div>
+            
+           
           </div>
         </div>
-      </div>
+      </AntMod>
     </>
   );
 };
