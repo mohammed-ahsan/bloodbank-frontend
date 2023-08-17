@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/shared/Layout/Header";
+
 import API from "./../../services/API";
 import moment from "moment";
 import { Card, Col, Row } from 'antd';
-import { MotionConfig,motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Layout from "../../components/shared/Layout/Layout";
 const Analytics = () => {
   const [data, setData] = useState([]);
