@@ -10,6 +10,8 @@ const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
  
   const [quantity, setQuantity] = useState(0);
   const [email, setEmail] = useState("");
+  const [divison,setDivison] = useState("")
+  const [district,setDistrict] = useState("")
   const { user } = useSelector((state) => state.auth);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const items = [{
@@ -159,7 +161,22 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
-            
+              Divison
+            <Input
+                
+                placeholder="divison"
+                inputType={"text"}
+                value={divison}
+                onChange={(e) => setDivison(e.target.value)}
+              />
+              District
+              <Input
+                
+                placeholder="district"
+                inputType={"text"}
+                value={district}
+                onChange={(e) => setDistrict(e.target.value)}
+              />
            
           </div>
         </div>
