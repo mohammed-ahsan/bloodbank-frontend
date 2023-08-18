@@ -265,7 +265,7 @@ setDistrict(0)
                     onChange={(e) => setPhone(e.target.value)}
                   />
                   <div>
-                  Divison :  {"  "}
+                  Division :  {"  "}
                    <AutoComplete
                    
         options={options}
