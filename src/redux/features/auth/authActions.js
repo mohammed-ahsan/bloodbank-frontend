@@ -39,7 +39,13 @@ export const userRegister = createAsyncThunk(
       hospitalName,
       website,
       divison,
-  district
+  district,
+  thana,
+  gender,
+  occupation,
+  weight,
+  dateofbirth
+
     },
     { rejectWithValue }
   ) => {
@@ -55,7 +61,12 @@ export const userRegister = createAsyncThunk(
         hospitalName,
         website,
         divison,
-  district
+  district,
+  thana,
+  gender,
+  occupation,
+  weight,
+  dateofbirth
       });
       if (data?.success) {
         alert("User Registerd Successfully");

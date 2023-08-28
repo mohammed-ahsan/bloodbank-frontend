@@ -12,7 +12,7 @@ const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [email, setEmail] = useState("");
   const [divison,setDivison] = useState("")
   const [district,setDistrict] = useState()
-
+ const [thana,setThana] = useState("")
   const options = [
     { value: 'Rajshahi'},
     { value: 'Dhaka' },
@@ -133,7 +133,8 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         bloodGroup,
         quantity,
         divison,
-        district
+        district,
+        thana,
       });
       if (data?.success) {
         alert("New Record Created");
@@ -254,6 +255,13 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         }
         placeholder="District"
       />
+      Thana: {"  "}
+       <Input
+                placeholder="Thana"
+                inputType={"text"}
+                value={thana}
+                onChange={(e) => setThana(e.target.value)}
+              />
                   </div>:<p>Select Division First!</p> } 
            
           </div>

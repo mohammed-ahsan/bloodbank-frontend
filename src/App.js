@@ -126,6 +126,14 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route
+          path="/admin"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
       </Routes>
     </>
   );

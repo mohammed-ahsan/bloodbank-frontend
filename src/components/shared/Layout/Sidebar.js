@@ -5,7 +5,7 @@ import { useSelector,useDispatch } from "react-redux";
 import "../../../styles/Layout.css";
 import { Breadcrumb, Layout, Menu, theme,Button } from 'antd';
 import { toggleMenuCollapsed } from "../../../redux/features/auth/authSlice";
-import { PieChartOutlined,ArrowRightOutlined,ArrowLeftOutlined,DatabaseOutlined,MedicineBoxOutlined  } from '@ant-design/icons';
+import { ContainerFilled,BankFilled ,PieChartFilled,ArrowRightOutlined,ArrowLeftOutlined,DatabaseFilled,MedicineBoxFilled  } from '@ant-design/icons';
 import {motion,AnimatePresence} from 'framer-motion';
 const { Content, Footer, Sider } = Layout;
 
@@ -32,13 +32,13 @@ items.push(
             }`}
           >
             <i className="fa-solid fa-warehouse"></i>
-            <Link to="/donar-list">Donar List</Link>
+            <Link to="/donar-list">Donor List</Link>
           </div>
           
         </>
       )
     ),
-    icon: <PieChartOutlined />,
+    icon: <PieChartFilled />,
   }
 )
 items.push(
@@ -60,7 +60,7 @@ items.push(
         </>
       )
     ),
-    icon: <PieChartOutlined />,
+    icon: <PieChartFilled />,
   }
 )
 items.push(
@@ -81,7 +81,7 @@ items.push(
         </>
       )
     ),
-    icon: <PieChartOutlined />,
+    icon: <PieChartFilled />,
   }
 )
 
@@ -98,7 +98,7 @@ items.push(
     
     ,
     
-    icon: <DatabaseOutlined />,
+    icon: <DatabaseFilled />,
     path:'/',
     }
     )
@@ -109,7 +109,7 @@ items.push(
      ,
     
     
-    icon: <MedicineBoxOutlined />,
+    icon: <MedicineBoxFilled />,
     path:'/hospital',
     }
     )
@@ -125,7 +125,7 @@ items.push(
     
     
     ,
-    icon: <PieChartOutlined />,
+    icon: <PieChartFilled />,
     path:'/donar',
     }
     )
@@ -147,46 +147,41 @@ if (user?.role === "hospital"){
       )
   )
   ,
-  icon: <PieChartOutlined />,
+  icon: <PieChartFilled />,
   }
   )
+}
+if(user?.role === "donar" ){
+  items.push(
+    {key: '1',
+    label:"Dashboard"
+  ,
+  path:"/",
+  icon: <PieChartFilled />,
+  }
+  )
+  items.push(
+    {key: '2',
+    label:"My Donations",
+    path:"/donation",
+    icon: <ContainerFilled />,
+    })
 }
   if(user?.role === "donar" || user?.role === "hospital"){
     items.push(
       {key: '2',
-      label: (
-        <div
-              className={`menu-item ${
-                location.pathname === "/orgnaisation" && "active"
-              }`}
-            >
-              <i className="fa-sharp fa-solid fa-building-ngo"></i>
-              <Link to="/orgnaisation">Orgnaisation</Link>
-            </div>
-    )
+      label: 
+        
+              "Orgnaisations"
+            
+    
     ,
-    icon: <PieChartOutlined />,
+    icon: <BankFilled />,
+    path:'/orgnaisation',
     }
     )
   } 
-if(user?.role === "donar" ){
-  items.push(
-    {key: '1',
-    label: (
-      <div
-      className={`menu-item ${
-        location.pathname === "/donation" && "active"
-      }`}
-    >
-      <i className="fa-sharp fa-solid fa-building-ngo"></i>
-      <Link to="/donation">Donation</Link>
-    </div>
-  )
-  ,
-  icon: <PieChartOutlined />,
-  }
-  )
-}
+
 
 
   

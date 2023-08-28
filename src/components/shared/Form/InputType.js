@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Input } from "antd";
 const InputType = ({
   labelText,
   labelFor,
@@ -10,14 +10,14 @@ const InputType = ({
 }) => {
   return (
     <>
-      <div className="mb-1">
-        <label htmlFor={labelFor} className="form-label">
-          {labelText} :
+      <div className="flex flex-row">
+        <label  className="flex flex-row mr-2" >
+          {labelText} <p></p>:
         </label>
-        <input
+        <Input
         
           type={inputType}
-          className="bg-gray-100 rounded-lg ml-2"
+          className="bg-gray-100  rounded-lg "
           name={name}
           value={value}
           onChange={onChange}
