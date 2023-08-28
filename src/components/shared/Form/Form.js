@@ -19,7 +19,7 @@ import { auth, app } from "../../../firebase.js";
 import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 
 import dayjs from "dayjs";
-import { set } from "mongoose";
+
 const Form = ({ formType, submitBtn, formTitle }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
