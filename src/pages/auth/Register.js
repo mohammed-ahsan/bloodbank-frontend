@@ -11,11 +11,12 @@ const Register = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex sm:flex-row flex-col gap-8 h-screen justify-start items-center bg-gray-100">
-          <div className="col-md-8 form-banner ">
-            <img className="h-30 " src="./assets/images/banner2.jpg" alt="registerImage" />
-          </div>
-          <div className="sm:mr-8">
+        <div  style={{
+          boxShadow: "0px -10px 40px -10px rgba(0,0,0,0.75)",
+        }}
+        className="flex sm:flex-row relative flex-col h-full py-[120px] gap-8 justify-center items-center bg-green-200 rounded-l-[75px] !rounded-b-none  ml-[2%]">
+         
+          <div className="">
             <Form
               formTitle={"Register"}
               submitBtn={"Register"}

@@ -11,11 +11,13 @@ const Login = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="flex sm:flex-row flex-col h-screen gap-8 justify-start items-center bg-gray-100">
-          <div className="col-md-8 form-banner">
-            <img
-            className="h-30"
-            src="./assets/images/banner1.jpg" alt="loginImage" />
+        <div
+        style={{
+          boxShadow: "0px -10px 40px -10px rgba(0,0,0,0.75)",
+        }}
+        className="flex sm:flex-row relative flex-col h-screen gap-8 justify-center items-center bg-green-200 rounded-l-[75px] !rounded-b-none  ml-[2%]">
+          <div className="">
+           
           </div>
           <div className="sm:mr-8">
             <Form
