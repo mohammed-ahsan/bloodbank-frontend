@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import InputType from "./../Form/InputType";
 import API from "./../../../services/API";
-import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete } from 'antd';
+import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space } from 'antd';
 import { useEffect } from "react";
 
 const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
@@ -155,6 +155,21 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
   return (
     <>
       {/* Modal */}
+      <ConfigProvider
+        theme={{
+          token: {
+            // Seed Token
+            colorPrimary: ' #dc2626',
+            borderRadius: 10,
+    
+            // Alias Token
+            
+          },
+        }}
+      >
+        <Space
+        direction="vertical"
+        >
       <AntMod open={isModalOpen} 
       okText={<p className=" text-black">Submit</p>}
       okButtonProps={{className:"border-1 border-gray-300 rounded-lg",type:"default"}}
@@ -267,6 +282,8 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
           </div>
         </div>
       </AntMod>
+      </Space>
+  </ConfigProvider>
     </>
   );
 };

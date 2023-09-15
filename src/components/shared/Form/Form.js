@@ -11,6 +11,7 @@ import {
   Spin,
   Modal,
   Input,
+  ConfigProvider, Space, theme ,Radio 
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -20,7 +21,7 @@ import { signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 
 import dayjs from "dayjs";
 
-const Form = ({ formType, submitBtn, formTitle }) => {
+const Form = ({ formType, submitBtn, formTitle,style }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("donar");
@@ -281,7 +282,24 @@ const Form = ({ formType, submitBtn, formTitle }) => {
   }, [divison]);
 
   return (
-    <Card >
+    <ConfigProvider
+    theme={{
+      token: {
+        // Seed Token
+        colorPrimary: ' #dc2626',
+        borderRadius: 10,
+
+        // Alias Token
+        
+      },
+    }}
+  >
+    <Space>
+    <Card 
+    className={` ${style} ` }
+     
+   
+    >
       <Modal
       open={open}
        title= "Verify Your Phone Number"
@@ -319,7 +337,12 @@ const Form = ({ formType, submitBtn, formTitle }) => {
 
       />
       <fm
-        className="flex flex-col justify-start h-full  gap-4"
+       
+       
+       initialValues={{
+         remember: true,
+       }}
+        className="flex flex-col justify-start w-[250px] h-full   "
         onSubmit={(e) => {
           if (formType === "login")
             return handleLogin(e, email, password, role);
@@ -343,39 +366,41 @@ const Form = ({ formType, submitBtn, formTitle }) => {
               weight,
               dateofbirth
             );
+            else if (formType === "admin-login")
+            return handleLogin(e, email, password, role);
         }}
       >
         <h1 className="text-center">{formTitle}</h1>
         <hr />
-        <div  className="flex flex-row">
-          <div  className="fm-check">
-            <input
-              type="radio"
-              className="form-check-input"
-              name="role"
-              id="donarRadio"
+        <div  className="flex flex-row justify-between py-4">
+          <Radio.Group
+          defaultValue="donar"
+          >
+            <Radio
+            
+              
               value={"donar"}
               onChange={(e) => setRole(e.target.value)}
               defaultChecked
-            />
-            <label  className="ml-2">
-              Donor
-            </label>
-          </div>
+              autoFocus
+            >Donor</Radio>
+            
+          
          
-          <div className="form-check ms-2">
-            <input
-              type="radio"
-              className="form-check-input"
-              name="role"
-              id="organisationRadio"
+          
+            <Radio 
+             className="py-2"
               value={"organisation"}
               onChange={(e) => setRole(e.target.value)}
-            />
-            <label  className="ml-2">
-              Organisation
-            </label>
-          </div>
+            >Organisation</Radio>
+            {formType === "admin-login" && (
+              <Radio
+              value={"admin"}
+              onChange={(e) => setRole(e.target.value)}
+              >Admin</Radio>
+            )}
+            </Radio.Group>
+          
         </div>
         <div id='recap'></div>
         {/* switch statement */}
@@ -394,6 +419,30 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <InputType
+                  style={'absolute top-0 '}
+                    labelText={"Password"}
+                    labelFor={"forPassword"}
+                    inputType={"password"}
+                    name={"password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </>
+              );
+            }
+            case formType === "admin-login": {
+              return (
+                <>
+                  <InputType
+                    labelText={"Email"}
+                    labelFor={"forEmail"}
+                    inputType={"email"}
+                    name={"email"}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <InputType
+                  style={'absolute top-0 '}
                     labelText={"Password"}
                     labelFor={"forPassword"}
                     inputType={"password"}
@@ -446,6 +495,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <InputType
+                  style={'absolute top-0 '}
                     labelText={"Password"}
                     labelFor={"forPassword"}
                     inputType={"password"}
@@ -462,35 +512,33 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                   />
+                  <div className="flex flex-row relative ">
                   <InputType
                     labelText={"Phone"}
                     labelFor={"forPhone"}
                     inputType={"text"}
                     name={"phone"}
                     value={phone}
+                    style={"rounded-r-none"}
                     onChange={(e) => setPhone(e.target.value)}
                   />
-                  
-                  <button
+                  <Button
                    disabled={isVerified}
+                   loading={loading}
+                   type="primary"
+                    htmlType="button"
+                    size="middle"
+                   className="bg-red-600 rounded-l-none absolute ml-2 right-0"
                     onClick={() => {
                       sendCode();
                      // openModal();
                     }}
-                    className="bg-red-600  cursor-pointer text-white p-2 rounded-md focus:scale-90  focus:bg-gray-800 transition-all flex flex-row justify-center items-center gap-2 ease-in-out  "
-                  >{loading && <Spin
-                    indicator={
-                      <LoadingOutlined
-                        className="text-white "
-                        style={{ fontSize: 18 }}
-                        spin
-                      />
-                    }
-                  /> }
-                    {" "}
+                   // className="bg-red-600 mb-2 cursor-pointer text-white px-4 py-2 rounded-lg focus:scale-90  focus:bg-gray-800 transition-all flex flex-row justify-center items-center gap-2 ease-in-out  "
+                  >
                     {isVerified ? "Verified" : "Verify"}
                    
-                  </button>
+                  </Button>
+                  </div>
                   <InputType
                     labelText={"Gender"}
                     inputType={"text"}
@@ -499,6 +547,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                     onChange={(e) => setGender(e.target.value)}
                   />
                   <InputType
+                  style={'absolute top-0 '}
                     labelText={"Occupation"}
                     inputType={"text"}
                     name={"occupation"}
@@ -512,10 +561,12 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                   />
-                  Date of Birth : {"  "}
-                  <div style={{ width: 300, height: 360 }} className="flex h-full w-full rounded-lg border-2">
+                  Date of Birth : {dateofbirth.format("DD-MM-YYYY")}
+                  <div style={{ width: 282, height: 360 }} className="relative -ml-4  border-2 rounded-lg ">
                     <Calendar
                       fullscreen={false}
+                      
+                      className=" "
                       onSelect={(value) => setDateofbirth(value)}
                       value={dateofbirth}
                       onPanelChange={(value, mode) => {
@@ -523,11 +574,12 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                       }}
                     />
                   </div>
-                  <div>
-                    Division : {"  "}
+                  <div className=" flex flex-row items-center py-2">
+                    <p className="mr-2">Division:</p>
                     <AutoComplete
+                    className="w-full"
                       options={options}
-                      style={{ width: 200 }}
+                      
                       onSelect={onSelect}
                       filterOption={(inputValue, option) =>
                         option.value
@@ -537,12 +589,12 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                       placeholder="Division"
                     />
                   </div>
-                  {divison.length > 0 ? (
-                    <div>
-                      District : {"  "}
+                  {divison.length > 0 ? (<div>
+                    <div className="flex flex-row items-center py-2">
+                    <p className="mr-2"> District:</p>
                       <AutoComplete
                         options={optionDist[district]}
-                        style={{ width: 200 }}
+                       className="w-full"
                         onSelect={onSelect}
                         filterOption={(inputValue, option) =>
                           option.value
@@ -551,17 +603,17 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                         }
                         placeholder="District"
                       />
-                      <InputType
+                     
+                    </div> <InputType
                         labelText={"Thana"}
                         labelFor={"forPhone"}
                         inputType={"text"}
                         name={"thana"}
                         value={thana}
                         onChange={(e) => setThana(e.target.value)}
-                      />
-                    </div>
+                      /> </div>
                   ) : (
-                    <p>Select Division First!</p>
+                    <p className="py-2">Select Division First!</p>
                   )}
                 </>
               );
@@ -570,39 +622,43 @@ const Form = ({ formType, submitBtn, formTitle }) => {
         })()}
 
         <div className="d-flex flex-row justify-content-between">
-        <button
-            className="font-semibold border-2 p-1 my-2 px-2 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg "
-            type="submit"
+        <Button
+           // className="font-semibold border-2 p-1 my-2 px-2 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg "
+            type="primary"
+           onClick={(e )=>{
+            if (formType === "login" || formType === "admin-login")
+            return handleLogin(e, email, password, role);
+           }}
+            className="bg-red-600 mb-2 cursor-pointer text-white px-4 py-2 rounded-lg focus:scale-90  focus:bg-gray-800 transition-all flex flex-row justify-center items-center gap-2 ease-in-out  "
+
+
           >
             {submitBtn}
-          </button>
+          </Button>
           {formType === "login" ? (
             <p>
-              Not registerd yet ? Register
-              <Link
-                to="/register"
-                className="font-semibold border-2 p-1 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg ml-2"
+              Not registerd yet ?  <Link to="/register">
+              <Button
+              
+              
+                className="mx-2"
+               // className="font-semibold border-2 p-1 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg ml-2"
               >
-                {" "}
-                Here ! {" "}
-              </Link>
+               
+
+                Register ! </Button></Link>
+              
             </p>
           ) : (
             <p>
-              Already A User, Please
-              <Link
-                className="font-semibold border-2 p-1 px-2 focus:opacity-75 focus:bg-blue-200 transition-all border-blue-200 rounded-lg ml-2"
-                to="/login"
-              >
-                {" "}
-                Login ! {" "}
-              </Link>
+              
             </p>
           )}
           
         </div>
       </fm>
-    </Card>
+    </Card>  </Space>
+  </ConfigProvider>
   );
 };
 

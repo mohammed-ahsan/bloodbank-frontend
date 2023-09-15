@@ -3,11 +3,11 @@ import React from "react";
 import { useLocation, BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import { useSelector,useDispatch } from "react-redux";
 import "../../../styles/Layout.css";
-import { Breadcrumb, Layout, Menu, theme,Button } from 'antd';
+import { Breadcrumb, Layout, Menu, theme,Button,ConfigProvider, Space, } from 'antd';
 import { toggleMenuCollapsed } from "../../../redux/features/auth/authSlice";
 import { ContainerFilled,BankFilled ,PieChartFilled,ArrowRightOutlined,ArrowLeftOutlined,DatabaseFilled,MedicineBoxFilled  } from '@ant-design/icons';
 import {motion,AnimatePresence} from 'framer-motion';
-const { Content, Footer, Sider } = Layout;
+const {  Sider } = Layout;
 
 
 const Sidebar = () => {
@@ -20,70 +20,39 @@ const dispatch = useDispatch();
   const [showMenu,setShowMenu] = React.useState(false);
   
   if (user?.role === "admin"){
-items.push(
-  {
-    key: '1',
-    label: (
-      user?.role === "admin" && (
-        <>
-          <div
-            className={`menu-item ${
-              location.pathname === "/donar-list" && "active"
-            }`}
-          >
-            <i className="fa-solid fa-warehouse"></i>
-            <Link to="/donar-list">Donor List</Link>
-          </div>
-          
-        </>
-      )
-    ),
+    items.push(
+      {key: '1',
+      label:"Admin"
+    ,
+    path:"/admin",
+    icon: <BankFilled />,
+    }
+    )
+    items.push(
+      {key: '2',
+      label:"Donor List"
+    ,
+    path:"/donar-list",
     icon: <PieChartFilled />,
-  }
-)
-items.push(
-  {
-    key: '2',
-    label: (
-      user?.role === "admin" && (
-        <>
-          
-          <div
-            className={`menu-item ${
-              location.pathname === "/hospital-list" && "active"
-            }`}
-          >
-            <i className="fa-solid fa-hand-holding-medical"></i>
-            <Link to="/hospital-list">Hospital List</Link>
-          </div>
-          
-        </>
-      )
-    ),
+    }
+    )
+    items.push(
+      {key: '3',
+      label:"Hospital List"
+    ,
+    path:"/hospital-list",
     icon: <PieChartFilled />,
-  }
-)
-items.push(
-  {
-    key: '3',
-    label: (
-      user?.role === "admin" && (
-        <>
-          
-          <div
-            className={`menu-item ${
-              location.pathname === "/org-list" && "active"
-            }`}
-          >
-            <i className="fa-solid fa-hospital"></i>
-            <Link to="/org-list">Organisation List</Link>
-          </div>
-        </>
-      )
-    ),
+    }
+    )
+    items.push(
+      {key: '4',
+      label:"Organisation List"
+    ,
+    path:"/org-list",
     icon: <PieChartFilled />,
-  }
-)
+    }
+    )
+
 
 }
 
@@ -198,10 +167,26 @@ if(user?.role === "donar" ){
   //   transition={{duration:0.1}}
     
   //   > 
+   
+  <ConfigProvider
+  theme={{
+    token: {
+      // Seed Token
+      colorPrimary: ' #dc2626',
+      borderRadius: 10,
+
+      // Alias Token
+      
+    },
+  }}
+>
+  <Space
+  direction="vertical"
+  >
    <Layout hasSider>
         <Sider
       
-      theme="dark"
+     
       className="flex relative  flex-col justify-between h-screen rounded-r-lg shadow-md shadow-gray-600 "
       collapsible trigger={null} collapsed={ menuCollapsed == 1 ? false : true}
       //  onCollapse={(value) => {
@@ -245,7 +230,8 @@ if(user?.role === "donar" ){
       
           
          
-      </Layout>
+      </Layout></Space>
+  </ConfigProvider>
     
       
           

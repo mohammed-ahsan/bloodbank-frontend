@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import Spinner from "./../../components/shared/Spinner";
 import {  ArrowLeftOutlined } from "@ant-design/icons";
 import { Button,ConfigProvider, Space } from "antd";
-const Login = () => {
+const AdminLogin = () => {
   const { loading, error } = useSelector((state) => state.auth);
   return (
     <>
@@ -36,9 +36,9 @@ const Login = () => {
           
             <Form
             style={'shadow-md shadow-gray-400'}
-              formTitle={"Login Page"}
+              formTitle={"Admin Login Page"}
               submitBtn={"Login"}
-              formType={"login"}
+              formType={"admin-login"}
              
             />
             <Button
@@ -55,4 +55,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;
