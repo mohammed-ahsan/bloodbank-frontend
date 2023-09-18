@@ -1,4 +1,5 @@
 import { Button, Dropdown } from "antd";
+import { set } from "mongoose";
 import React from "react";
 const items = [
     {
@@ -13,7 +14,7 @@ const items = [
       key: '3',
       label:'Other',
     }]
-const ReqDroDown = () => {
+const ReqDroDown = ({setGender}) => {
     const [GenderState,setGenderState] = React.useState(items[0].label)
     return (
     <Dropdown
@@ -23,7 +24,7 @@ const ReqDroDown = () => {
        // defaultSelectedKeys: ['9'],
         onSelect: ({ item, key, keyPath, selectedKeys, domEvent  }) => {
 
-
+setGenderState(items[key-1].label)
       }
       }}
     ><Button>{GenderState}</Button>

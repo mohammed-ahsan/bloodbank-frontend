@@ -48,8 +48,8 @@ const Header = () => {
     navigate("/login");
   };
   const items = [
-   
-    getItem((location.pathname === "/" ||
+   getItem(<Link  to="/profile" >Profile</Link>, '1', <TeamOutlined />),
+   , getItem((location.pathname === "/" ||
     location.pathname === "/donar" ||
     location.pathname === "/hospital" ? (
      
@@ -67,7 +67,8 @@ const Header = () => {
     )), '2', <DesktopOutlined />),
     getItem((<button className="" onClick={handleLogout}>
     Logout
-  </button>), 'sub1', <UserOutlined />),
+  </button>), '3', <UserOutlined />),
+
     
   ];
 

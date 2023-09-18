@@ -29,6 +29,7 @@ const HomePage = () => {
   const [phone, setPhone] = useState("");
   const [divison, setDivison] = useState("");
   const [district, setDistrict] = useState();
+  const [formDistrict, setFormDistrict] = useState("");
   const [thana, setThana] = useState("");
   const [age, setAge] = useState("");
  const [weight, setWeight] = useState("");
@@ -36,7 +37,7 @@ const HomePage = () => {
   const [gender, setGender] = useState("");
   const [ReqBloodGroup, setReqBloodGroup] = useState("");
   const [quantity, setQuantity] = useState("");
-
+const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
   const onSelect = (data) => {
     //console.log(optionDist);
 
@@ -301,27 +302,48 @@ const HomePage = () => {
           open={bloodReqOpen}
           onCancel={()=>setBloodReqOpen(false)}
           okText={<p className=" text-white">Submit</p>}
-          okButtonProps={{className:"  border-none hover:opacity-75 rounded-lg bg-red-600",type:"default"}}
+          okButtonProps={{className:"  border-none hover:opacity-75 rounded-lg bg-red-600",type:"default",loading:ReqSubmitLoading}}
           title="Create New Blood Request"
           onOk={
-            ()=>{
-                API.post("/blood-request/create-bloodRequest",{
+           async ()=>{
+              setReqSubmitLoading(true)
+               await API.post("/blood-request/create-bloodRequest",{
                   user_id:user._id,
                   role:user.role,
-                  bloodGroup:"A+",
-                  quantity:100,
-                  divison:"Dhaka",
-                  district:"Dhaka",
-                  thana:"Dhanmondi",
+                  bloodGroup:bloodGroup,
+                  quantity:quantity,
+                  divison:divison,
+                  district:formDistrict,
+                  thana:thana,
 
-                  phone:"01700000000",
-                  address:"Dhanmondi 32",
-                  age:20,
-                  weight:60,
-                  name:"Rahim",
-                  reason:"accident",
-                  gender:"male", }
+                  phone:phone,
+                  address:address,
+                  age:age,
+                  weight:weight,
+                  name:name,
+                  reason:reason,
+                  gender:gender, }
                 )
+                .then(()=>{
+                  setReqSubmitLoading(false)
+                  setQuantity("")
+                  setDivison("")
+                  setDistrict("")
+                  setFormDistrict("")
+                  setThana("")
+                  setPhone("")
+                  setAddress("")
+                  setAge("")
+                  setWeight("")
+                  setName("")
+                  setReason("")
+                  setGender("")
+                
+
+
+
+                setBloodReqOpen(false)
+                })
             }
           }
           >
@@ -349,6 +371,9 @@ const HomePage = () => {
               Quantity:  {"  "}
               <Input
               placeholder="Quantity"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+
 
               />
              
@@ -357,31 +382,43 @@ const HomePage = () => {
             Name:  {"  "}
              <Input
              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
              
              />
              Age: {"  "}
               <Input
               placeholder="Age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
               />
               Weight: {"  "}
               <Input
               placeholder="Weight"
+              value={weight}
+              onChange={(e) => setWeight(e.target.value)}
               />
               Reason: {"  "}
               <Input
               placeholder="Reason"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
               />
               <div className="pt-2">
               Gender: {"  "}
               
-              <ReqDroDown/> </div>
+              <ReqDroDown setGender={setGender}/> </div>
               Phone: {"  "}
               <Input
+              className="mb-2"
               placeholder="Phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+
               />
               Divison: {"  "}
               <AutoComplete
-                    className="w-full"
+                    className="w-[30%] mr-2"
                       options={options}
                       
                       onSelect={onSelect}
@@ -395,8 +432,13 @@ const HomePage = () => {
               District: {"  "}
               <AutoComplete
                         options={optionDist[district]}
-                       className="w-full"
-                        onSelect={onSelect}
+                       className="w-[30%]"
+                      //  onSelect={onSelect}
+                      onSelect={(e) => {
+                        console.log(e);
+                        setFormDistrict(e);
+
+                      }}
                         filterOption={(inputValue, option) =>
                           option.value
                             .toUpperCase()
@@ -407,10 +449,16 @@ const HomePage = () => {
               Thana: {"  "}
               <Input
               placeholder="Thana"
+              value={thana}
+              onChange={(e) => setThana(e.target.value)}
+
               />
               Address: {"  "}
               <Input
               placeholder="Address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+
               />
 
              
@@ -422,6 +470,7 @@ const HomePage = () => {
 
           <div className="w-full flex mt-2 justify-center">
             <Button
+            
               className="right-0 m-2 bg-white"
               onClick={() =>{setIsModalOpen(true)
               

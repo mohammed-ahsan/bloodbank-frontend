@@ -561,7 +561,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                     value={weight}
                     onChange={(e) => setWeight(e.target.value)}
                   />
-                  Date of Birth : {dateofbirth.format("DD-MM-YYYY")}
+                  Date of Birth {dateofbirth.format("DD-MM-YYYY")}
                   <div style={{ width: 282, height: 360 }} className="relative -ml-4  border-2 rounded-lg ">
                     <Calendar
                       fullscreen={false}
@@ -575,7 +575,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                     />
                   </div>
                   <div className=" flex flex-row items-center py-2">
-                    <p className="mr-2">Division:</p>
+                    <p className="mr-2">Division</p>
                     <AutoComplete
                     className="w-full"
                       options={options}
@@ -591,7 +591,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                   </div>
                   {divison.length > 0 ? (<div>
                     <div className="flex flex-row items-center py-2">
-                    <p className="mr-2"> District:</p>
+                    <p className="mr-2"> District</p>
                       <AutoComplete
                         options={optionDist[district]}
                        className="w-full"
