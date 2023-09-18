@@ -13,7 +13,7 @@ const {  Sider } = Layout;
 const Sidebar = () => {
   //GET USER STATE
   const { user,menuCollapsed } = useSelector((state) => state.auth);
-  console.log(menuCollapsed);
+  //console.log(menuCollapsed);
 const dispatch = useDispatch();
   const location = useLocation();
   const items = [];

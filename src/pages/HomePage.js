@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import Spinner from "../components/shared/Spinner";
 import Layout from "../components/shared/Layout/Layout";
 import Modal from "../components/shared/modal/Modal";
-
+import ReqDroDown from "../components/ReqDroDown";
 import API from "../services/API";
 import moment from "moment";
-import { Button,Grid,Table,ConfigProvider, Space } from "antd";
+import { Button,Grid,Table,ConfigProvider, Space,Modal as BloodReqModal, Input,Dropdown,AutoComplete } from "antd";
 
 import DemoPie from "../components/DemoPie";
 import DemoArea from "../components/DemoArea";
@@ -15,74 +15,186 @@ import DemoLiquid from "../components/DemoLiquid";
 import Calendar from "../components/Calendar";
 import Slider from "../components/Slider";
 import BarChart from "../components/BarChart"
-const chartData = [
-  {
-    type: 'a',
-    value: 27,
-  },
-  {
-    type: 'a',
-    value: 25,
-  },
-  {
-    type: 'a',
-    value: 18,
-  },
-  {
-    type: 'a',
-    value: 15,
-  },
-  {
-    type: 'a',
-    value: 10,
-  },
-  {
-    type: 'a',
-    value: 5,
-  },
-];
-const config = {
-  appendPadding: 10,
-  chartData,
-  angleField: 'value',
-  colorField: 'type',
-  radius: 1,
-  innerRadius: 0.6,
-  label: {
-    type: 'inner',
-    offset: '-50%',
-    content: '{value}',
-    style: {
-      textAlign: 'center',
-      fontSize: 14,
-    },
-  },
-  interactions: [
-    {
-      type: 'element-selected',
-    },
-    {
-      type: 'element-active',
-    },
-  ],
-  statistic: {
-    title: false,
-    content: {
-      style: {
-        whiteSpace: 'pre-wrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      },
-      content: 'AntV\nG2Plot',
-    },
-  },
-};
+
 const HomePage = () => {
   const { loading, error, user } = useSelector((state) => state.auth);
+ const [bloodReqOpen, setBloodReqOpen] = useState(false);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const [ColumnData, setColumnData] = useState([]);
   const [isModal, setIsModalOpen] = useState(false);
+  const [name, setName] = useState("");
+  
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [divison, setDivison] = useState("");
+  const [district, setDistrict] = useState();
+  const [thana, setThana] = useState("");
+  const [age, setAge] = useState("");
+ const [weight, setWeight] = useState("");
+  const [reason, setReason] = useState("");
+  const [gender, setGender] = useState("");
+  const [ReqBloodGroup, setReqBloodGroup] = useState("");
+  const [quantity, setQuantity] = useState("");
+
+  const onSelect = (data) => {
+    //console.log(optionDist);
+
+    setDivison(data);
+  };
+  useEffect(() => {
+    if (divison == "Rajshahi") {
+      setDistrict(5);
+    } else if (divison == "Barisal") {
+      setDistrict(0);
+    } else if (divison == "Chittagong") {
+      setDistrict(1);
+    } else if (divison == "Dhaka") {
+      setDistrict(2);
+    } else if (divison == "Khulna") {
+      setDistrict(3);
+    } else if (divison == "Mymensingh") {
+      setDistrict(4);
+    } else if (divison == "Rangpur") {
+      setDistrict(6);
+    } else if (divison == "Sylhet") {
+      setDistrict(7);
+    }
+  }, [divison]);
+  const options = [
+    { value: "Rajshahi" },
+    { value: "Dhaka" },
+    { value: "Barisal" },
+    { value: "Khulna" },
+    { value: "Chittagong" },
+    { value: "Sylhet" },
+    { value: "Rangpur" },
+    { value: "Mymensingh" },
+  ];
+  const optionDist = [
+    [
+      { value: "Barguna" },
+      { value: "Barisal" },
+      { value: "Bhola" },
+      { value: "Jhalokati" },
+      { value: "Patuakhali" },
+      { value: "Pirojpur" },
+    ],
+    [
+      { value: "Bandarban" },
+      { value: "Brahmanbaria" },
+      { value: "Chandpur" },
+      { value: "Chittagong" },
+      { value: "Comilla" },
+      { value: "Cox's Bazar" },
+      { value: "Feni" },
+      { value: "Khagrachhari" },
+      { value: "Lakshmipur" },
+      { value: "Noakhali" },
+      { value: "Rangamati" },
+    ],
+    [
+      { value: "Dhaka" },
+      { value: "Faridpur" },
+      { value: "Gazipur" },
+      { value: "Gopalganj" },
+      { value: "Kishoreganj" },
+      { value: "Madaripur" },
+      { value: "Manikganj" },
+      { value: "Munshiganj" },
+      { value: "Narayanganj" },
+      { value: "Narsingdi" },
+      { value: "Rajbari" },
+      { value: "Shariatpur" },
+      { value: "Tangail" },
+    ],
+    [
+      { value: "Bagerhat" },
+      { value: "Chuadanga" },
+      { value: "Jessore" },
+      { value: "Jhenaidah" },
+      { value: "Khulna" },
+      { value: "Kushtia" },
+      { value: "Magura" },
+      { value: "Meherpur" },
+      { value: "Narail" },
+      { value: "Satkhira" },
+    ],
+    [
+      { value: "Jamalpur" },
+      { value: "Mymensingh" },
+      { value: "Netrakona" },
+      { value: "Sherpur" },
+    ],
+    [
+      { value: "Bogra" },
+      { value: "Chapainawabganj" },
+      { value: "Joypurhat" },
+      { value: "Naogaon" },
+      { value: "Natore" },
+      { value: "Pabna" },
+      { value: "Rajshahi" },
+      { value: "Sirajganj" },
+    ],
+    [
+      { value: "Dinajpur" },
+      { value: "Gaibandha" },
+      { value: "Kurigram" },
+      { value: "Lalmonirhat" },
+      { value: "Nilphamari" },
+      { value: "Panchagarh" },
+      { value: "Rangpur" },
+      { value: "Thakurgaon" },
+    ],
+    [
+      { value: "Habiganj" },
+      { value: "Moulvibazar" },
+      { value: "Sunamganj" },
+      { value: "Sylhet" },
+    ],
+  ];
+  const items = [{
+    key: '1',
+    label: "O+",
+  },
+  {
+    key: '2',
+    label:"O-",
+  },
+  {
+    key: '3',
+    label:'A+',
+  }
+,
+{
+  key: '4',
+  label:'A-',
+
+
+},
+{
+  key: '5',
+  label:'B+',
+
+},
+{
+  key: '6',
+  label:'B-',
+
+},
+{
+  key: '7',
+  label:'AB+',
+
+},
+{
+  key: '8',
+  label:'AB-',
+},
+
+
+]
+  const [bloodGroup, setBloodGroup] = useState(items[0].label);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -121,13 +233,14 @@ const HomePage = () => {
       key: 'TimeDate',
     }
   ];
+ 
   //get function
   const getBloodRecords = async () => {
     try {
       const { data } = await API.get("/inventory/get-inventory");
       if (data?.success) {
-        setData(data?.inventory);
-        data.inventory.map(
+       // setData(data?.inventory);
+       data.inventory.map(
 
           (record) => {
             ColumnData.push({
@@ -141,7 +254,8 @@ const HomePage = () => {
         }
         
         )
-         console.log(data);
+        setData(ColumnData);
+       
       }
     } catch (error) {
       console.log(error);
@@ -168,7 +282,14 @@ const HomePage = () => {
   <Space
   direction="vertical"
   >
-    <Layout>
+    <Layout
+    
+
+    >
+      <div
+      className="mt-[65px]"
+      >
+      
       {user?.role === "admin" && navigate("/admin")}
       {error && <span>{alert(error)}</span>}
       {loading ? (
@@ -176,7 +297,129 @@ const HomePage = () => {
       ) : (
         <>
           <div className="flex flex-col justify-center items-center">
+          <BloodReqModal
+          open={bloodReqOpen}
+          onCancel={()=>setBloodReqOpen(false)}
+          okText={<p className=" text-white">Submit</p>}
+          okButtonProps={{className:"  border-none hover:opacity-75 rounded-lg bg-red-600",type:"default"}}
+          title="Create New Blood Request"
+          onOk={
+            ()=>{
+                API.post("/blood-request/create-bloodRequest",{
+                  user_id:user._id,
+                  role:user.role,
+                  bloodGroup:"A+",
+                  quantity:100,
+                  divison:"Dhaka",
+                  district:"Dhaka",
+                  thana:"Dhanmondi",
+
+                  phone:"01700000000",
+                  address:"Dhanmondi 32",
+                  age:20,
+                  weight:60,
+                  name:"Rahim",
+                  reason:"accident",
+                  gender:"male", }
+                )
+            }
+          }
+          >
+ 
+                Blood Group: &nbsp;
+                <Dropdown
+                
+               
+                menu={{items,
+                  selectable: true,
+                  //defaultSelectedKeys: ['1'],
+                  onSelect: ({ item, key, keyPath, selectedKeys, domEvent  }) => {
+                    
+                    setBloodGroup(items[key-1].label)
+                   
+                  },
+
+                }}
+                
+                //onChange={(e) => setBloodGroup(e.target.value)}
+              >
+               <Button>{bloodGroup}</Button>
+              </Dropdown>
+              <br/>
+              Quantity:  {"  "}
+              <Input
+              placeholder="Quantity"
+
+              />
+             
+    
+             
+            Name:  {"  "}
+             <Input
+             placeholder="Name"
+             
+             />
+             Age: {"  "}
+              <Input
+              placeholder="Age"
+              />
+              Weight: {"  "}
+              <Input
+              placeholder="Weight"
+              />
+              Reason: {"  "}
+              <Input
+              placeholder="Reason"
+              />
+              <div className="pt-2">
+              Gender: {"  "}
+              
+              <ReqDroDown/> </div>
+              Phone: {"  "}
+              <Input
+              placeholder="Phone"
+              />
+              Divison: {"  "}
+              <AutoComplete
+                    className="w-full"
+                      options={options}
+                      
+                      onSelect={onSelect}
+                      filterOption={(inputValue, option) =>
+                        option.value
+                          .toUpperCase()
+                          .indexOf(inputValue.toUpperCase()) !== -1
+                      }
+                      placeholder="Division"
+                    />
+              District: {"  "}
+              <AutoComplete
+                        options={optionDist[district]}
+                       className="w-full"
+                        onSelect={onSelect}
+                        filterOption={(inputValue, option) =>
+                          option.value
+                            .toUpperCase()
+                            .indexOf(inputValue.toUpperCase()) !== -1
+                        }
+                        placeholder="District"
+                      />
+              Thana: {"  "}
+              <Input
+              placeholder="Thana"
+              />
+              Address: {"  "}
+              <Input
+              placeholder="Address"
+              />
+
+             
           
+
+          </BloodReqModal>
+          
+
+
           <div className="w-full flex mt-2 justify-center">
             <Button
               className="right-0 m-2 bg-white"
@@ -188,6 +431,18 @@ const HomePage = () => {
             
               Add Inventory
             </Button>
+            <Button
+              className="right-0 m-2 bg-white"
+              onClick={()=>{
+               
+setBloodReqOpen(true)
+              
+               
+              }
+            }
+              >
+              Add Blood Request
+            </Button>
             </div>
             <div className="grid w-[80vw] h-90 mb-20 grid-cols-1  sm:grid-cols-2 lg:grid-cols-4 items-center gap-8 m-2">
             <Slider/>
@@ -198,23 +453,24 @@ const HomePage = () => {
          <BarChart/>
             </div>
             <Table 
-            className="w-[90vw] bg-white rounded-lg overflow-scroll"
-            pagination={
-              {
-                defaultCurrent:1, 
-                total:50,
-                showSizeChanger:true,
-                showQuickJumper:true,
+            className="w-[90vw] bg-white mb-5  overflow-scroll"
+            // pagination={
+            //   {
+            //     defaultCurrent:1, 
+            //     total:50,
+            //     showSizeChanger:true,
+            //     showQuickJumper:true,
 
-              }
-            }
+            //   }
+            // }
             
-            bordered columns={columns} dataSource={ColumnData} />
+            bordered columns={columns} dataSource={data} />
 
             <Modal isModal={isModal} showModal={showModal} handleOk={handleOk} handleCancel={handleCancel} />
           </div>
         </>
       )}
+      </div>
     </Layout></Space>
   </ConfigProvider>
   );

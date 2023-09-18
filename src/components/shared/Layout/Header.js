@@ -25,13 +25,12 @@ const { Content, Footer, Sider } = Layout;
 const Header = () => {
   const dispatch = useDispatch();
   const { user,menuCollapsed } = useSelector((state) => state.auth);
+ // console.log("user",user)
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(menuCollapsed);
  
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const colorBgContainer = "#dc2626" ;
   function getItem(label, key, icon, children) {
     return {
       key,
@@ -54,15 +53,16 @@ const Header = () => {
     location.pathname === "/donar" ||
     location.pathname === "/hospital" ? (
      
-        <Link to="/recentrecords" className="nav-link">
+        <Link to="/recentrecords" className="">
           Recent Records
         </Link>
       
     ) : (
-      
-        <Link to="/admin" className="nav-link">
-          Home
-        </Link>
+      <>
+      {user ? (<Link to={user.role === "admin"?"/admin":"/"} className="">
+      Home
+    </Link>):<Skeleton.Button/>}</>
+        
       
     )), '2', <DesktopOutlined />),
     getItem((<button className="" onClick={handleLogout}>
@@ -75,18 +75,26 @@ const Header = () => {
   return (
     
       
-     <Layout
-     className="sticky top-0 z-50"
-     //className="w-full border-2 border-red-600 "
-     >
+    
       
         <Layout.Header
-        theme="dark"
+       className="absolute top-0 z-50"
+
           style={{
             padding: 0,
-            background: colorBgContainer,
+            background: '#dc2626',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            color: '#dc2626',
+            width: '100%',
+            height: '64px',
+            boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)',
+            zIndex: 100,
+            backgroundColor: '#dc2626',
+
 
           }}
+
           //className="w-full border-2 border-red-600 "
         >
           <Menu >
@@ -161,7 +169,7 @@ const Header = () => {
           </Layout.Header>
           
         
-        </Layout>
+       
       
    
   );

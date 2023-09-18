@@ -79,7 +79,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
         setLoading2(false)
         setOpen(false);
         const user = userCredential.user;
-        console.log("User signed in:", user);
+       // console.log("User signed in:", user);
       })
       .catch((error) => {
         console.error("Error verifying code:", error);
@@ -103,7 +103,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
         // ...
 
         setConfirmationResult(res);
-        console.log(JSON.stringify(res));
+       // console.log(JSON.stringify(res));
         
 //         Modal.info({
          
@@ -257,7 +257,7 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
   ];
 
   const onSelect = (data) => {
-    console.log(optionDist);
+    //console.log(optionDist);
 
     setDivison(data);
   };
