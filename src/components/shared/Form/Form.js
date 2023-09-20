@@ -539,13 +539,16 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                    
                   </Button>
                   </div>
-                  <InputType
-                    labelText={"Gender"}
-                    inputType={"text"}
-                    name={"gender"}
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  />
+                  Gender
+                  <Radio.Group
+                  className="my-4"
+                    defaultValue={'m'}
+                    onChange={(e)=>setGender(e.target.value)}
+                    >
+                        <Radio value={"m"}>Male</Radio>
+                    <Radio value={"f"}>Female</Radio>
+                    <Radio value={"o"}>Other</Radio>
+                    </Radio.Group>
                   <InputType
                   style={'absolute top-0 '}
                     labelText={"Occupation"}
@@ -567,10 +570,10 @@ const Form = ({ formType, submitBtn, formTitle,style }) => {
                       fullscreen={false}
                       
                       className=" "
-                      onSelect={(value) => setDateofbirth(value)}
+                      onSelect={(value) => setDateofbirth(dayjs(value))}
                       value={dateofbirth}
                       onPanelChange={(value, mode) => {
-                        setDateofbirth(value);
+                        setDateofbirth(dayjs(value));
                       }}
                     />
                   </div>

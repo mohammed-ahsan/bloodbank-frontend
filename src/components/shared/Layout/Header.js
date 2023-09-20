@@ -48,7 +48,9 @@ const Header = () => {
     navigate("/login");
   };
   const items = [
-   getItem(<Link  to="/profile" >Profile</Link>, '1', <TeamOutlined />),
+    getItem((<button className="" onClick={handleLogout}>
+    Logout
+  </button>), '3', <UserOutlined />)
    , getItem((location.pathname === "/" ||
     location.pathname === "/donar" ||
     location.pathname === "/hospital" ? (
@@ -65,12 +67,13 @@ const Header = () => {
         
       
     )), '2', <DesktopOutlined />),
-    getItem((<button className="" onClick={handleLogout}>
-    Logout
-  </button>), '3', <UserOutlined />),
+  
 
     
   ];
+  if(user?.role == "donar" ){
+    items.push(getItem(<Link  to="/profile" >Profile</Link>, '1', <TeamOutlined />))
+  }
 
 
   return (
@@ -79,7 +82,7 @@ const Header = () => {
     
       
         <Layout.Header
-       className="absolute top-0 z-50"
+       className="sticky top-0 z-50"
 
           style={{
             padding: 0,

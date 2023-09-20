@@ -7,11 +7,27 @@ import { useSelector } from 'react-redux';
 const Profile = () => {
     const {user} = useSelector(state=>state.auth);
     const [divison, setDivison] = useState("");
-    const [district, setDistrict] = useState();
-    const [dateOfBirth, setDateOfBirth] = useState(dayjs(user?.dateOfBirth));
+    const [district, setDistrict] = useState(user?.district);
+    const [dateOfBirth, setDateOfBirth] = useState(user?.dateOfBirth);
+    const [dayjsofBirth, setDayjsofBirth] = useState('');
+    const [name, setName] = useState(user?.name);
+    const [organisationName, setOrganisationName] = useState(user?.organisationName);
+    const [hospitalName, setHospitalName] = useState(user?.hospitalName);
+    const [email, setEmail] = useState(user?.email);
+    const [phone, setPhone] = useState(user?.phone);
+    const [password, setPassword] = useState('');
+    const [address, setAddress] = useState(user?.address);
+    const [thana, setThana] = useState(user?.thana);
+    const [weight, setWeight] = useState(user?.weight);
+    const [gender,setGender] = useState(user?.gender);
+   const [occupation, setOccupation] = useState(user?.occupation);
+    const [divisons, setDivisons] = useState(user?.divison);
+    const [loading, setLoading] = useState(false);
+
+
     const onSelect = (data) => {
         //console.log(optionDist);
-    
+
         setDivison(data);
       };
       useEffect(() => {
@@ -140,6 +156,7 @@ const Profile = () => {
                 >
                     <Input
                     defaultValue={user?.name}
+                    onChange={(e)=>setName(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
@@ -149,15 +166,18 @@ const Profile = () => {
                 >
                     <Input
                     defaultValue={user?.email}
+                    onChange={(e)=>setEmail(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
                 label='Phone'
                 name='phone'
+
               
                 >
                     <Input
                     defaultValue={user?.phone}
+                    onChange={(e)=>setPhone(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
@@ -167,6 +187,7 @@ const Profile = () => {
                 >
                     <Input
                     defaultValue={"********"}
+                    onChange={(e)=>setPassword(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
@@ -176,6 +197,7 @@ const Profile = () => {
                 >
                     <Input
                     defaultValue={user?.address}
+                    onChange={(e)=>setAddress(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
@@ -203,7 +225,7 @@ const Profile = () => {
                 >
                      <AutoComplete
                     className="w-[30%]"
-                      
+                      onSelect={(e) => setDivisons(e)}
                         options={optionDist[district]}
                         filterOption={(inputValue, option) =>
                             option.value
@@ -217,10 +239,22 @@ const Profile = () => {
                 <Form.Item
                 label='Thana'
                 name='thana'
+                
                
                 >
                     <Input
                     defaultValue={user?.thana}
+                    onChange={(e)=>setThana(e.target.value)}
+                    />
+                </Form.Item>
+                <Form.Item
+                label='Occupation'
+                name='occupation'
+                >
+
+                    <Input
+                    defaultValue={user?.occupation}
+                    onChange={(e)=>setOccupation(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
@@ -230,6 +264,7 @@ const Profile = () => {
                 >
                     <Input
                     defaultValue={user?.weight}
+                    onChange={(e)=>setWeight(e.target.value)}
                     />
                 </Form.Item>
                 <Form.Item
@@ -239,6 +274,7 @@ const Profile = () => {
                 >
                     <Radio.Group
                     defaultValue={user.gender}
+                    onChange={(e)=>setGender(e.target.value)}
                     >
                         <Radio value={"m"}>Male</Radio>
                     <Radio value={"f"}>Female</Radio>
@@ -251,10 +287,10 @@ const Profile = () => {
                
                 >
                     <Calendar
-                    
+                    style={{ width: 282, height: 360 }}
                     fullscreen={false}
-                    
-                    defaultValue={dateOfBirth}
+                    onChange={(e)=>setDayjsofBirth(dayjs(e.target.value))}
+                    defaultValue={dayjs(dateOfBirth)}
 
                     />
                 </Form.Item>
@@ -266,6 +302,37 @@ const Profile = () => {
                 
             </Form>
                     <Button
+                    loading={loading}
+                    onClick={async()=>{
+                    setLoading(true);
+                    try {
+                    const {data} = await API.post('/auth/update-user',{
+                      
+
+
+
+                      name,
+                      divison:divisons,
+                        organisationName,
+                        hospitalName,
+                        email,
+                        phone,
+                        password,
+                        address,
+                        thana,
+                        weight,
+                        gender,
+                        occupation,
+                       
+                        district,
+                        dayjsofBirth
+                    })
+                  console.log(data)
+                  } catch (error) {
+                        console.log(error)
+                    }
+                    setLoading(false);
+                    }}
                    className='bg-red-600'
                     type="primary">Update</Button></div>
         </Layout>
