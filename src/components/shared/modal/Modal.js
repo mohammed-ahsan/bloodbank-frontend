@@ -9,7 +9,7 @@ const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [inventoryType, setInventoryType] = useState("in");
  
   const [quantity, setQuantity] = useState(0);
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [divison,setDivison] = useState("")
   const [district,setDistrict] = useState()
  const [thana,setThana] = useState("")
@@ -126,16 +126,30 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
       if (!bloodGroup || !quantity) {
         return alert("Please Provide All Fields");
       }
-      const { data } = await API.post("/inventory/create-inventory", {
-        email,
-        organisation: user?._id,
+      const postObject = {
+        phone,
+        
         inventoryType,
         bloodGroup,
         quantity,
         divison,
         district,
         thana,
-      });
+      };  
+      if (user?.role === "donar") {
+        postObject.donar = user?._id;
+      }
+      if (user?.role === "organisation") {
+        postObject.organisation = user?._id;
+      }
+      if(user?.role === "admin"){
+        postObject.organisation = user?._id;
+      }
+      if(inventoryType === "out" && user?.role === "donar"){
+        return alert("Donar Can't Create Out Record")
+      }
+
+      const { data } = await API.post("/inventory/create-inventory", postObject);
       if (data?.success) {
         alert("New Record Created");
         window.location.reload();
@@ -230,12 +244,12 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
               </Dropdown></div>
               </div>
               
-              Donor Email
+              Donor Phone Number
               <Input
-                placeholder="********@email.com"
-                inputType={"email"}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                placeholder="01*********"
+                inputType={"phone"}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />Quanitity (ML)
               <Input
                 

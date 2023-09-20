@@ -53,7 +53,7 @@ const Header = () => {
   </button>), '3', <UserOutlined />)
    , getItem((location.pathname === "/" ||
     location.pathname === "/donar" ||
-    location.pathname === "/hospital" ? (
+    location.pathname === "/hospital" || location.pathname === "/admin" ? (
      
         <Link to="/recentrecords" className="">
           Recent Records
