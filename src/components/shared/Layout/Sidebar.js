@@ -59,6 +59,15 @@ const dispatch = useDispatch();
     path:"/request-list",
     icon: <PieChartFilled />,
       })
+      items.push(
+        {key: '6',
+        label:"Record List"
+      ,
+      path:"/record-list",
+      icon: <PieChartFilled />,
+        })
+        
+
 
 
 }
