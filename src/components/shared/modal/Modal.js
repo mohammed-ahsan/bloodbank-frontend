@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [inventoryType, setInventoryType] = useState("in");
- 
+ const [Name,setDonorName] = useState("")
   const [quantity, setQuantity] = useState(0);
   const [phone, setPhone] = useState("");
   const [divison,setDivison] = useState("")
@@ -128,7 +128,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
       }
       const postObject = {
         phone,
-        
+        Name,
         inventoryType,
         bloodGroup,
         quantity,
@@ -243,7 +243,14 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                <Button>{bloodGroup}</Button>
               </Dropdown></div>
               </div>
-              
+              Name
+              <Input
+
+                placeholder="Name"
+                inputType={"text"}
+                value={Name}
+                onChange={(e) => setDonorName(e.target.value)}
+              />
               Donor Phone Number
               <Input
                 placeholder="01*********"
