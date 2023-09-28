@@ -26,7 +26,11 @@ const Login = () => {
       >
         <Space
         direction="vertical"
+        
         >
+          <div
+          className="bg-red-600 h-full w-screen flex justify-center items-center"
+          >
         <div
         style={{
           boxShadow: "0px -5px 40px -10px rgba(0,0,0,0.75)",
@@ -46,7 +50,7 @@ const Login = () => {
           className="bg-white "
           icon={<ArrowLeftOutlined />}
           >Home</Button>
-        </div>
+        </div></div>
        
         </Space>
   </ConfigProvider>

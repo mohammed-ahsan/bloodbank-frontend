@@ -173,7 +173,9 @@ if(user?.role === "donar" ){
   
   return (<AnimatePresence> 
 
- { (menuCollapsed == 0 || menuCollapsed == 1) && (
+ { (
+  //menuCollapsed == 0 || menuCollapsed == 
+  1) && (
 
 
   //    <motion.div
@@ -201,10 +203,20 @@ if(user?.role === "donar" ){
   >
    <Layout hasSider>
         <Sider
+       breakpoint="lg"
+       collapsedWidth="0"
+       onBreakpoint={(broken) => {
+         console.log(broken);
+       }}
+       onCollapse={(collapsed, type) => {
+         console.log(collapsed, type);
+       }} 
       
-     
+    trigger={null}
+    // zeroWidthTriggerStyle={{ top: 0, color: "red" }}
       className="flex relative  flex-col justify-between h-screen rounded-r-lg shadow-md shadow-gray-600 "
-      collapsible trigger={null} collapsed={ menuCollapsed == 1 ? false : true}
+      //collapsible trigger={null}
+       collapsed={ menuCollapsed == 1 ? false : true}
       //  onCollapse={(value) => {
       // console.log(value)
       // dispatch(toggleMenuCollapsed())}}
@@ -227,19 +239,25 @@ if(user?.role === "donar" ){
             ))}
           </Menu>
        <div
-       className="absolute h-[50px] w-full bottom-0"
+       className="absolute h-[50px] z-50 bottom-0 left-0 "
        >
         <div
-        onClick={() => dispatch(toggleMenuCollapsed())}
-        className="flex transition-all active:scale-75 active:opacity-70 justify-center items-center w-8 h-8 text-white bg-red-700  m-auto rounded-full cursor-pointer"
+        onClick={() => {dispatch(toggleMenuCollapsed())
+        console.log(menuCollapsed)
+        }}
+        className="flex z-50 shadow-sm shadow-gray-600 transition-all active:scale-75 active:opacity-70 justify-center items-center w-8 h-8 text-white bg-red-700  m-auto rounded-r-full cursor-pointer"
         >
-        {
-          !menuCollapsed ? (
-            <ArrowRightOutlined />
-            ):(
-<ArrowLeftOutlined />
-          )
-        }
+        
+           
+            <ArrowRightOutlined 
+            hidden={menuCollapsed === -1 ? false : true }
+            />
+        
+<ArrowLeftOutlined
+hidden={menuCollapsed === 1 ? false : true}
+/>
+          
+        
         </div>
         </div>
       </Sider>

@@ -268,27 +268,12 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
   }, []);
   return (
-    <ConfigProvider
-  theme={{
-    token: {
-      // Seed Token
-      colorPrimary: ' #dc2626',
-      borderRadius: 10,
-
-      // Alias Token
-      
-    },
-  }}
->
-  <Space
-  direction="vertical"
-  >
+   
     <Layout
     
-
     >
       <div
-      className="mt-[65px]"
+     
       >
       
       {user?.role === "admin" && navigate("/admin")}
@@ -520,8 +505,7 @@ setBloodReqOpen(true)
         </>
       )}
       </div>
-    </Layout></Space>
-  </ConfigProvider>
+    </Layout>
   );
 };
 

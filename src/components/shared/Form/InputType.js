@@ -42,7 +42,9 @@ const InputType = ({
           name={name}
           value={value}
           onChange={onChange}
-        />  </Form.Item>
+        />  
+        
+        </Form.Item>
       </div>
       </Space>
   </ConfigProvider>
