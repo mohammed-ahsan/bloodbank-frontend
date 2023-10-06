@@ -15,7 +15,7 @@ import DemoLiquid from "../../components/DemoLiquid";
 import Calendar from "../../components/Calendar";
 import Slider from "../../components/Slider";
 import BarChart from "../../components/BarChart"
-import { get } from "mongoose";
+
 
 const HomePage = () => {
   const { loading, error, user } = useSelector((state) => state.auth);
