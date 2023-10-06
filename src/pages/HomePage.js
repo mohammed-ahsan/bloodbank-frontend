@@ -20,8 +20,10 @@ const HomePage = () => {
   const { loading, error, user } = useSelector((state) => state.auth);
  const [bloodReqOpen, setBloodReqOpen] = useState(false);
   const [data, setData] = useState([]);
+  const [TotalEntry, setTotalEntry] = useState(0);
+const [TotalEntryEachMonth, setTotalEntryEachMonth] = useState(null);
   const navigate = useNavigate();
-  const ColumnData = [];
+  const [ColumnData,setColumnData] = useState([]);
   const [isModal, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   
@@ -256,7 +258,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
         }
         
         )
-        setData(ColumnData);
+        setColumnData(ColumnData);
        
       }
     } catch (error) {
@@ -268,6 +270,31 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
     getBloodRecords();
 
   }, []);
+
+  const getBloodGroupData = async () => {
+    try {
+      const { data } = await API.get("/analytics/bloodGroups-data");
+      if (data?.success) {
+        setData(data?.bloodGroupData);
+        setTotalEntry(data?.totalEntry);
+        setTotalEntryEachMonth(data?.totalEntryEachMonth);
+         console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if(data.length==0){
+    getBloodGroupData();}
+  }, []);
+
+  if(data.length==0){
+    return <div
+    className="w-screen h-screen flex justify-center items-center"
+    ><Spinner/></div>
+  }
+  else
   return (
    
     <Layout
@@ -482,11 +509,12 @@ setBloodReqOpen(true)
             </div>
             <div className="grid w-[80vw] h-90 mb-20 grid-cols-1  sm:grid-cols-2 lg:grid-cols-4 items-center gap-8 m-2">
             <Slider/>
-            <DemoPie />
-         <DemoArea/>
-         <Calendar/>
+            <DemoPie bloodGroupData={data} />
+         <DemoArea totalEntry={TotalEntry}/>
+         <BarChart totalEntryEachMonth={TotalEntryEachMonth}/>
         
-         <BarChart/>
+         
+         <Calendar/>
             </div>
             <Table 
             className="w-[90vw] bg-white mb-5  overflow-scroll"
@@ -500,7 +528,7 @@ setBloodReqOpen(true)
             //   }
             // }
             
-            bordered columns={columns} dataSource={data} />
+            bordered columns={columns} dataSource={ColumnData} />
 
             <Modal isModal={isModal} showModal={showModal} handleOk={handleOk} handleCancel={handleCancel} />
           </div>
