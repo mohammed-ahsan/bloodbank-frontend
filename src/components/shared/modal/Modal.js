@@ -13,6 +13,7 @@ const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [divison,setDivison] = useState("")
   const [district,setDistrict] = useState()
  const [thana,setThana] = useState("")
+ const [lastDonateMonth,setLastDonateMonth] = useState('')
   const options = [
     { value: 'Rajshahi'},
     { value: 'Dhaka' },
@@ -123,7 +124,7 @@ setDistrict(0)
 const [bloodGroup, setBloodGroup] = useState(items[0].label);
   const handleModalSubmit = async () => {
     try {
-      if (!bloodGroup || !quantity) {
+      if (!bloodGroup || !Name || !phone || !lastDonateMonth || !divison || !district || !thana) {
         return alert("Please Provide All Fields");
       }
       const postObject = {
@@ -131,7 +132,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
         Name,
         inventoryType,
         bloodGroup,
-        quantity,
+        lastDonateMonth,
         divison,
         district,
         thana,
@@ -257,13 +258,13 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 inputType={"phone"}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-              />Quanitity (ML)
+              />Last Donated (month)
               <Input
                 
-                placeholder="quantity"
-                inputType={"Number"}
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                placeholder="Last Donated in Months"
+                inputType={"number"}
+                value={lastDonateMonth}
+                onChange={(e) => setLastDonateMonth(e.target.value)}
               />
             <div>
                   Division:  {"  "}

@@ -10,7 +10,8 @@ const Login = () => {
     <>
       {error && <span>{alert(error)}</span>}
       {loading ? (
-        <Spinner />
+        <div className="w-screen h-screen flex justify-center items-center">
+        <Spinner /></div>
       ) : (
         <ConfigProvider
         theme={{

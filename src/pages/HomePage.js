@@ -21,7 +21,7 @@ const HomePage = () => {
  const [bloodReqOpen, setBloodReqOpen] = useState(false);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
-  const [ColumnData, setColumnData] = useState([]);
+  const ColumnData = [];
   const [isModal, setIsModalOpen] = useState(false);
   const [name, setName] = useState("");
   
@@ -219,12 +219,12 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
       key: 'InventoryType',
     },
     {
-      title: 'Quantity',
+      title: 'Last Donated (month)',
       dataIndex: 'Quantity',
       key: 'Quantity',
     },
     {
-      title: 'Donor Email',
+      title: 'Donor Phone',
       dataIndex: 'DonarEmail',
       key: 'DonarEmail',
     },
@@ -240,7 +240,8 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
     try {
       const { data } = await API.get("/inventory/get-inventory");
       if (data?.success) {
-       // setData(data?.inventory);
+       // setData(data?.inventory);\
+        console.log(data.inventory);
        data.inventory.map(
 
           (record) => {
@@ -248,8 +249,8 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
             key: record._id,
             BloodGroup: record.bloodGroup,
             InventoryType: record.inventoryType,
-            Quantity: record.quantity,
-            DonarEmail: record.email,
+            Quantity: record.lastDonateMonth,
+            DonarEmail: record.phone,
             TimeDate: moment(record.createdAt).format("DD/MM/YYYY hh:mm A")
           })
         }
@@ -430,8 +431,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                             .indexOf(inputValue.toUpperCase()) !== -1
                         }
                         placeholder="District"
-                      />
-              Thana: {"  "}
+                      /><br></br>
+                      
+                   Thana: {"  "}
               <Input
               placeholder="Thana"
               value={thana}
@@ -463,7 +465,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
             >
             
-              Add Inventory
+              Add Donor
             </Button>
             <Button
               className="right-0 m-2 bg-white"

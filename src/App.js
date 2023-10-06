@@ -44,14 +44,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/hospital-list"
           element={
             <ProtectedRoute>
               <HospitalList />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/org-list"
           element={
@@ -77,14 +77,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/recentrecords"
           element={
             <ProtectedRoute>
               <Analytics />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/consumer"
           element={

@@ -22,7 +22,7 @@ const dispatch = useDispatch();
   if (user?.role === "admin"){
     items.push(
       {key: '1',
-      label:"Admin"
+      label:"Dashboard"
     ,
     path:"/admin",
     icon: <BankFilled />,
@@ -36,14 +36,7 @@ const dispatch = useDispatch();
     icon: <PieChartFilled />,
     }
     )
-    items.push(
-      {key: '3',
-      label:"Hospital List"
-    ,
-    path:"/hospital-list",
-    icon: <PieChartFilled />,
-    }
-    )
+   
     items.push(
       {key: '4',
       label:"Organisation List"
@@ -77,7 +70,7 @@ const dispatch = useDispatch();
       {key: '1',
       label: 
     
-         'Inventory'
+         'Dashboard'
       
     
     
@@ -203,11 +196,9 @@ if(user?.role === "donar" ){
   >
    <Layout hasSider>
         <Sider
-       breakpoint="lg"
-       collapsedWidth="0"
-       onBreakpoint={(broken) => {
-         console.log(broken);
-       }}
+       
+       collapsedWidth="55"
+        width="160"
        onCollapse={(collapsed, type) => {
          console.log(collapsed, type);
        }} 
@@ -250,7 +241,7 @@ if(user?.role === "donar" ){
         
            
             <ArrowRightOutlined 
-            hidden={menuCollapsed === -1 ? false : true }
+            hidden={menuCollapsed === 0 ? false : true }
             />
         
 <ArrowLeftOutlined

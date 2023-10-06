@@ -2,17 +2,60 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../components/shared/Layout/Layout";
 import moment from "moment";
 import API from "../../services/API";
+import { Table,Button } from "antd";
 
 const RecordList = () => {
     const [data, setData] = useState([]);
+const ColumnData = [];
+const columns = [
+{
+    title: 'Name',
+    dataIndex: 'Type',
+    key: 'Type',
 
+},
+{
+title: 'Blood Group',
+dataIndex: 'BloodGroup',
+key: 'BloodGroup',
+},
+{
+title: 'Phone',
+dataIndex: 'Phone',
+key: 'Phone',
+},
+{
+    title: 'Date',
+    dataIndex: 'Date',
+    key: 'Date',
+  },
+{
+title: 'Action',
+dataIndex: 'Action',
+key: 'Action',
+}
+]
     const getRecordList = async () => {
         try {
             const { data } = await API.get("/inventory/get-inventory");
            // console.log(data);
-          
-                setData(data.inventory);
-                console.log(data);
+          data.inventory.map(
+                                                  
+                (record) => {
+                  ColumnData.push({
+                  key: record._id,
+                  Type: record.Name,
+                  BloodGroup: record.bloodGroup,
+                  Phone: record.phone,
+                  Date: moment(record.createdAt).format("DD/MM/YYYY hh:mm A"),
+                  Action: <Button
+                      className="bg-red-500 text-white"
+                      onClick={() => handelDelete(record._id)}>Delete</Button>
+                })
+             }                                  
+          )
+                setData(ColumnData);
+               
           
         } catch (error) {
             console.log(error);
@@ -38,44 +81,9 @@ const RecordList = () => {
       };
     return (
         <Layout>
-            <div className="min-h-screen w-screen border-2 border-red-600">
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Type</th>
-                        <th scope="col">Blood Group</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data?.map((record) => (
-
-                        <tr key={record._id}>
-                            <td>{record.inventoryType}</td>
-                            <td>{record.bloodGroup}</td>
-                            <td>{record.phone}</td>
-                            <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
-                            <td>
-                                <button
-
-                                    className="btn btn-danger"
-                                    onClick={() => {
-                                        
-                                        handelDelete(record._id)
-                                    }}
-                                >
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                    ))
-                    }
-                    
-                </tbody>
-            </table>
-            </div>
+           <Table 
+            className="w-[90vw] bg-white mb-5  overflow-scroll"
+           columns={columns} dataSource={data}  />
         </Layout>
 
     )
