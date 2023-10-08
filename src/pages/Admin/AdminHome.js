@@ -333,7 +333,7 @@ const [TotalEntryEachMonth, setTotalEntryEachMonth] = useState(null);
                <Button>{bloodGroup}</Button>
               </Dropdown>
               <br/>
-              Quantity:  {"  "}
+              Quantity (ml):  {"  "}
               <Input
               placeholder="Quantity"
               value={quantity}
