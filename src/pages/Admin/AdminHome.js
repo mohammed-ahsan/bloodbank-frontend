@@ -443,7 +443,7 @@ const [TotalEntryEachMonth, setTotalEntryEachMonth] = useState(null);
 
             >
             
-              Add Inventory
+              Add Donor
             </Button>
             <Button
               className="right-0 m-2 bg-white"

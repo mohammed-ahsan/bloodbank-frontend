@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Layout from "../components/shared/Layout/Layout";
 import API from "../services/API";
 import { useSelector } from "react-redux";
-import { Table } from "antd";
+import { Table,Button } from "antd";
 const Donation = () => {
   const { user } = useSelector((state) => state.auth);
   const [data, setData] = useState([]);
@@ -33,6 +33,11 @@ const Donation = () => {
       title: 'Time & Date',
       dataIndex: 'TimeDate',
       key: 'TimeDate',
+    },
+    {
+    title: 'Action',
+    dataIndex: 'Action',
+    key: 'Action',
     }
   ];
   const postObject =
@@ -69,7 +74,10 @@ const Donation = () => {
              InventoryType: record.inventoryType,
              Quantity: record.lastDonateMonth,
              DonarEmail: record.phone,
-             TimeDate: moment(record.createdAt).format("DD/MM/YYYY hh:mm A")
+             TimeDate: moment(record.createdAt).format("DD/MM/YYYY hh:mm A"),
+             Action: <Button
+             className="bg-red-500 text-white"
+             onClick={() => handelDelete(record._id)}>Delete</Button>
            })
          }
          
@@ -81,7 +89,21 @@ const Donation = () => {
       console.log(error);
     }
   };
-
+  const handelDelete = async (id) => {
+    try {
+      let answer = window.prompt(
+        "Are You Sure Want To Delete This Request",
+        "Sure"
+      );
+      if (!answer) return;
+      const { data } = await API.delete(`/inventory/delete-inventory/${id}`);
+      alert(data?.message);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+      window.location.reload();
+    }
+  };
   useEffect(() => {
     getDonars();
   }, []);
@@ -90,7 +112,7 @@ const Donation = () => {
     <Layout>
       <div className="container mt-4">
       <Table 
-            className="w-[90vw] bg-white mb-5  overflow-scroll"
+            className="w-[90vw] bg-white   overflow-scroll"
             // pagination={
             //   {
             //     defaultCurrent:1, 
