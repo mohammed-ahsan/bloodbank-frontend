@@ -90,7 +90,7 @@ const DonarList = () => {
   return (
     <Layout>
       <Table
-       className="w-[90vw] bg-white mb-5  overflow-scroll"
+       className="w-[90vw] bg-white mx-5  overflow-scroll"
       columns={columns} dataSource={data} />
     </Layout>
   );

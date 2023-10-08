@@ -82,7 +82,7 @@ key: 'Action',
     return (
         <Layout>
            <Table 
-            className="w-[90vw] bg-white mb-5  overflow-scroll"
+            className="w-[90vw] bg-white  overflow-scroll"
            columns={columns} dataSource={data}  />
         </Layout>
 

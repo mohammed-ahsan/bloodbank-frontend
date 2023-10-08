@@ -86,7 +86,7 @@ const OrgList = () => {
 
   return (
     <Layout>
-      <Table className="w-[90vw] bg-white mb-5  overflow-scroll" columns={columns} dataSource={ColumnData} />
+      <Table className="w-[90vw] bg-white mx-5  overflow-scroll" columns={columns} dataSource={ColumnData} />
     </Layout>
   );
 };
