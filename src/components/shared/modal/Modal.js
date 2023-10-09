@@ -241,7 +241,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-               <p className="flex"> Last Donate Date: <p className="text-red-600 mx-2 font-bold"> * </p></p> 
+               <p className="flex"> Last Donate Date:</p> 
               <Input
                 
                 placeholder="Last Donate Date"
