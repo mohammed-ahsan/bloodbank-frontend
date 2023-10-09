@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import InputType from "./../Form/InputType";
 import API from "./../../../services/API";
-import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space } from 'antd';
+import { Button,Modal as AntMod,Dropdown,Radio,Input,AutoComplete,ConfigProvider, Space, Calendar } from 'antd';
 import { useEffect } from "react";
-
+import dayjs from "dayjs";
 const Modal = ({isModal,handleCancel,showModal,handleOk}) => {
   const [inventoryType, setInventoryType] = useState("in");
  const [Name,setDonorName] = useState("")
@@ -201,28 +201,9 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
           <div className="flex flex-col gap-2">
             
             
-              <div className="flex flex-row justify-between">
+              <div className="flex flex-row ">
                
-                <div className="flex flex-col gap-2">
-                Record Type: &nbsp;
-                  <Radio.Group
-
-                    
-                    onChange={(e) => 
-                      {setInventoryType(e.target.value)
-                      
-                      }}
-                    value={inventoryType}
-                  
-
-                  >
-                    <Radio value={"in"}>In</Radio>
-                    <Radio value={"out"}>Out</Radio>
-                  </Radio.Group>
-                
-                  
-                  
-                </div>
+               
                 <div>
                 Blood Group: &nbsp;
                 <Dropdown
@@ -241,10 +222,10 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 
                 //onChange={(e) => setBloodGroup(e.target.value)}
               >
-               <Button>{bloodGroup}</Button>
-              </Dropdown></div>
+               <Button>{bloodGroup}</Button> 
+              </Dropdown></div><p className="text-red-600 mx-2 font-bold"> * </p>
               </div>
-              Name
+            <p className="flex"> Name <p className="text-red-600 mx-2 font-bold"> * </p></p> 
               <Input
 
                 placeholder="Name"
@@ -252,22 +233,29 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                 value={Name}
                 onChange={(e) => setDonorName(e.target.value)}
               />
-              Donor Phone Number
+              
+              <p className="flex"> Donor Phone Number: <p className="text-red-600 mx-2 font-bold"> * </p></p> 
               <Input
                 placeholder="01*********"
                 inputType={"phone"}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-              />Last Donated (month)
+              />
+               <p className="flex"> Last Donate Date: <p className="text-red-600 mx-2 font-bold"> * </p></p> 
               <Input
                 
-                placeholder="Last Donated in Months"
+                placeholder="Last Donate Date"
                 inputType={"number"}
                 value={lastDonateMonth}
-                onChange={(e) => setLastDonateMonth(e.target.value)}
+                
+              />
+              <Calendar
+              fullscreen={false}
+              onSelect={(e) => setLastDonateMonth(e)}
               />
             <div>
-                  Division:  {"  "}
+                  
+                  <p className="flex"> Division:  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p> 
                    <AutoComplete
                    
         options={options}
@@ -283,6 +271,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
                  {divison.length>0?<div>
                   <div className="flex gap-2 items-center flex-row">
                   District:  {"  "}
+                  <p className="text-red-600 mx-2 font-bold"> * </p> 
                    <AutoComplete
                    
         options={optionDist[district]}
@@ -295,6 +284,7 @@ const [bloodGroup, setBloodGroup] = useState(items[0].label);
       />
       
       Thana: 
+      <p className="text-red-600 mx-2 font-bold"> * </p>
        <Input
        className="w-[30%]"
                 placeholder="Thana"

@@ -360,7 +360,7 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
             }
           }
           >
- 
+ <div className="flex">
                 Blood Group: &nbsp;
                 <Dropdown
                 
@@ -379,9 +379,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                 //onChange={(e) => setBloodGroup(e.target.value)}
               >
                <Button>{bloodGroup}</Button>
-              </Dropdown>
-              <br/>
-              Quantity (ml):  {"  "}
+              </Dropdown><p className="text-red-600 mx-2 font-bold"> * </p></div>
+              <br/><p className="flex">
+              Quantity (ml):  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Quantity"
               value={quantity}
@@ -390,9 +390,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
 
               />
              
-    
+             <p className="flex">
              
-            Name:  {"  "}
+            Name:  {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
              <Input
              placeholder="Name"
               value={name}
@@ -411,7 +411,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
               />
-              Reason: {"  "}
+               <p className="flex">
+             
+               Reason: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Reason"
               value={reason}
@@ -421,7 +423,10 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
               Gender: {"  "}
               
               <ReqDroDown setGender={setGender}/> </div>
-              Phone: {"  "}
+            
+              <p className="flex">
+             
+              Phone: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               className="mb-2"
               placeholder="Phone"
@@ -429,7 +434,9 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
               onChange={(e) => setPhone(e.target.value)}
 
               />
-              Divison: {"  "}
+             
+              <p className="flex">
+              Divison: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <AutoComplete
                     className="w-[30%] mr-2"
                       options={options}
@@ -442,7 +449,10 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                       }
                       placeholder="Division"
                     />
-              District: {"  "}
+             
+              <p className="flex">
+             
+              District: {"  "}<p className="text-red-600 mx-2 font-bold"> * </p></p>
               <AutoComplete
                         options={optionDist[district]}
                        className="w-[30%]"
@@ -460,14 +470,20 @@ const [ReqSubmitLoading, setReqSubmitLoading] = useState(false);
                         placeholder="District"
                       /><br></br>
                       
-                   Thana: {"  "}
+                  
+                   <p className="flex">
+             
+                   Thana: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Thana"
               value={thana}
               onChange={(e) => setThana(e.target.value)}
 
               />
-              Address: {"  "}
+              
+              <p className="flex">
+             
+              Address: {"  "} <p className="text-red-600 mx-2 font-bold"> * </p></p>
               <Input
               placeholder="Address"
               value={address}

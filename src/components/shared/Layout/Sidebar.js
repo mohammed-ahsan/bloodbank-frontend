@@ -220,7 +220,7 @@ if(user?.role === "donar" ){
       
       >
         <img 
-        className="w-11 h-11 m-auto"
+        className="w-11 h-11 p-1 m-auto"
         src="/logo192.png"  />
         <Menu 
         theme="dark" mode="inline"

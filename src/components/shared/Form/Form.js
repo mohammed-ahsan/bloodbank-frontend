@@ -509,7 +509,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                    type="primary"
                     htmlType="button"
                     size="middle"
-                   className="bg-red-600 rounded-l-none absolute ml-2 right-0"
+                   className="bg-red-600 rounded-l-none absolute bottom-[24px] right-0"
                     onClick={() => {
                       sendCode();
                      // openModal();
@@ -552,7 +552,9 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                   onClick={() => {
 setShowCalendar(!showCalendar)
                   }}
-                  >{dateofbirth.format("DD-MM-YYYY")}</div></div>
+                  >{dateofbirth.format("DD-MM-YYYY")}</div>
+                  <p className="text-red-600 font-bold mx-2">*</p>
+                  </div>
                 {showCalendar ?  <div style={{ width: 282, height: 360 }} className="relative -ml-4  border-2 rounded-lg ">
                     <Calendar
                       fullscreen={false}
@@ -578,7 +580,7 @@ setShowCalendar(!showCalendar)
                           .indexOf(inputValue.toUpperCase()) !== -1
                       }
                       placeholder="Division"
-                    />
+                    /><p className="text-red-600 font-bold mx-2">*</p>
                   </div>
                   {divison.length > 0 ? (<div>
                     <div className="flex flex-row items-center py-2">
@@ -593,7 +595,7 @@ setShowCalendar(!showCalendar)
                             .indexOf(inputValue.toUpperCase()) !== -1
                         }
                         placeholder="District"
-                      />
+                      /><p className="text-red-600 font-bold mx-2">*</p>
                      
                     </div> <InputType
                         labelText={"Thana"}
