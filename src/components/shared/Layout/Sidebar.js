@@ -30,7 +30,7 @@ const dispatch = useDispatch();
     )
     items.push(
       {key: '2',
-      label:"Donor List"
+      label:"User List"
     ,
     path:"/donar-list",
     icon: <PieChartFilled />,
@@ -54,7 +54,7 @@ const dispatch = useDispatch();
       })
       items.push(
         {key: '6',
-        label:"Record List"
+        label:"Donor List"
       ,
       path:"/record-list",
       icon: <PieChartFilled />,
