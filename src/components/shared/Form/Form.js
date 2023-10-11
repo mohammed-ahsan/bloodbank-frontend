@@ -31,7 +31,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
   const [hospitalName, setHospitalName] = useState("");
   const [website, setWebsite] = useState("");
   const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("+880");
+  const [phone, setPhone] = useState("");
   const [divison, setDivison] = useState("");
   const [district, setDistrict] = useState();
   const [thana, setThana] = useState("");
@@ -307,7 +307,9 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
        title= "Verify Your Phone Number"
        footer={null}
         closable={true}
-        
+        onCancel={() => {
+          setOpen(false);
+        }}
        children={
           <div>
             <p>
@@ -493,7 +495,7 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                   />
-                  <div className="flex flex-row relative ">
+                  <div className="flex flex-row">
                   <InputType
                     labelText={"Phone"}
                     labelFor={"forPhone"}
@@ -501,16 +503,19 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     name={"phone"}
                     value={phone}
                     defaultValue={"+880"}
-                    style={"rounded-r-none"}
+                    
                     onChange={(e) => setPhone(e.target.value)}
                   />
+                    <p
+                  className="text-red-600 font-bold mx-2"
+                  >*</p>   </div>
                   <Button
-                   disabled={isVerified}
+                   disabled={isVerified || loading}
                    loading={loading}
                    type="primary"
                     htmlType="button"
                     size="middle"
-                   className="bg-red-600 rounded-l-none absolute bottom-[24px] right-3"
+                   className="bg-red-600 mb-4 "
                     onClick={() => {
                       sendCode();
                      // openModal();
@@ -520,10 +525,8 @@ const FormComponent = ({ formType, submitBtn, formTitle,style }) => {
                     {isVerified ? "Verified" : "Verify"}
                    
                   </Button>
-                  <p
-                  className="text-red-600 font-bold ml-6 "
-                  >*</p>
-                  </div>
+                
+               
                   Gender
                   <Radio.Group
                   className="my-4"
