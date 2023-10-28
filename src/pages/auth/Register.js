@@ -39,7 +39,13 @@ const Register = () => {
           
         }}
         className="flex   w-[98vw]  flex-col -mb-2 pb-2 h-[100vh] gap-8 justify-center items-center bg-green-200 rounded-l-[75px] !rounded-b-none  ml-[2%]">
-         
+          <div
+       className="flex justify-center items-center gap-2"
+       >   <img 
+        className="w-11 h-11 p-1 m-auto bg-white rounded-full"
+        src="/logo192.png"  /><h1
+        className='text-slate-800 text-xl font-semibold text-center'
+        >QuickDonorBD - User</h1></div>
          <div
           
          className="overflow-y-scroll overflow-hidden rounded-r-none   shadow-md shadow-gray-400 w-[300px] h-[60%] rounded-xl">

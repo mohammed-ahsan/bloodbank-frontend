@@ -51,7 +51,7 @@ const DonarList = () => {
             key: record._id,
             Name: record.name,
             Phone: record.phone,
-            District: record.district,
+            District: record.divison,
             Address: record.address,
             TimeDate: moment(record.createdAt).format("DD/MM/YYYY hh:mm A"),
             Action: <Button

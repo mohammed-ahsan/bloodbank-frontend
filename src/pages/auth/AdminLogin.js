@@ -10,7 +10,8 @@ const AdminLogin = () => {
     <>
       {error && <span>{alert(error)}</span>}
       {loading ? (
-        <Spinner />
+        <div className="w-screen h-screen flex justify-center items-center">
+        <Spinner /></div>
       ) : (
         <ConfigProvider
         theme={{
@@ -33,7 +34,13 @@ const AdminLogin = () => {
           boxShadow: "0px -5px 40px -10px rgba(0,0,0,0.75)",
         }}
         className="flex relative w-[98vw]  flex-col h-screen gap-8 justify-center items-center bg-green-200 rounded-l-[75px] !rounded-b-none  ml-[2%]">
-         
+       <div
+       className="flex justify-center items-center gap-2"
+       >   <img 
+        className="w-11 h-11 p-1 m-auto bg-white rounded-full"
+        src="/logo192.png"  /><h1
+        className='text-slate-800 text-xl font-semibold text-center'
+        >QuickDonorBD - User</h1></div>
           
             <Form
             style={'shadow-md shadow-gray-400'}
